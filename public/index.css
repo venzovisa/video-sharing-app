@@ -1,0 +1,316 @@
+html {
+  scroll-behavior: smooth;
+  font-family: 'Aileron', Arial, Helvetica, sans-serif, -apple-system, BlinkMacSystemFont,
+  'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+}
+
+.header {
+  margin-bottom: 1rem;
+  border-bottom: 0.25rem solid purple;
+}
+
+h2 {
+  color: purple;
+}
+
+img,
+video,
+iframe {
+  display: inline-block; 
+  width: 100%; 
+  height: auto;
+  aspect-ratio: 16 / 9;
+}
+
+.btn {
+  display: inline-block;
+  padding: 1rem; 
+  border: none;
+  border-radius: 0.5rem;
+  min-width: 7rem; 
+  color: #fff;
+  font-weight: 400;
+  font-size: 1.125rem;
+  font-family: 'Barlow', Arial, Helvetica, sans-serif; 
+  text-transform: uppercase;
+  text-decoration: none;
+  text-align: center;
+  background-color: purple;
+  cursor: pointer;
+}
+
+.btn:hover {
+  color: #fff;
+  background-color: #555;
+}
+
+.btn-search {
+  padding: 0.375rem 0.75rem;
+}
+
+.page-counter {
+  margin: 0.5rem 0;
+}
+
+.btn-items-box {
+  text-align: right;
+}
+
+/* #region Videos */
+.videos-list {
+  text-align: center;
+}
+
+.videos-item .box {
+  position: relative;
+  margin-bottom: 1rem;
+  border-top: 0.125rem solid purple;
+  border-radius: 0.25rem;
+  -webkit-box-shadow: 0 1px 1px rgb(0 0 0 / 3%), 0 1px 2px rgb(0 0 0 / 3%), 0 0 2px rgb(0 0 0 / 3%), 0 3px 4px rgb(0 0 0 / 3%);
+  box-shadow: 0 1px 1px rgb(0 0 0 / 3%), 0 1px 2px rgb(0 0 0 / 3%), 0 0 2px rgb(0 0 0 / 3%), 0 3px 4px rgb(0 0 0 / 3%);
+}
+
+.videos-item .btn-liked {
+  z-index: 1;
+  position: absolute;
+  top: 3rem;
+  left: 0.75rem;
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.videos-item .btn-liked:before {
+  content: '\e9d7';
+  color: #ffeb3b;
+  font-family: 'icomoon';
+  font-weight: 400;
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.videos-item .btn-liked.active:before {
+  content: '\e9d9';
+}
+
+.videos-item .link-image {
+  position: relative;
+}
+
+.videos-item .link-image:before {
+  content: '';
+  z-index: 1;
+  position: absolute;
+  top: .5rem;
+  right: .75rem;
+  height: 32px;
+  width: 32px;
+  background: url(./mega.svg) no-repeat center;
+}
+
+.videos-item p {
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+}
+
+.videos-item .date {
+  font-family: 'Bebas', Arial, Helvetica, sans-serif;
+  font-weight: 400;
+  font-size: 1rem;
+  text-align: left;
+}
+
+.videos-item .series {
+  font-family: 'Oswald', Arial, Helvetica, sans-serif;
+  font-weight: 400;
+  font-size: 1rem;
+  text-align: right;
+}
+
+.link-series {
+  text-decoration: none;
+  font-size: 1.125rem;
+}
+
+.videos-item .name {
+  font-family: 'Oswald', Arial, Helvetica, sans-serif;
+  font-weight: 400;
+  font-size: 1.25rem;
+}
+
+.videos-item .btn-play {
+  padding: 0.5rem 1rem;
+}
+
+.videos-item .btn-play:before {
+  content: "\ea15";
+  margin-right: 0.5rem;
+  color: #fff;
+  font-family: 'icomoon';
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.videos-item .btn-gallery {
+  padding: 0.5rem 1rem;
+}
+
+.videos-item .btn-gallery:before {
+  content: "\e90e";
+  margin-right: 0.5rem;
+  color: #fff;
+  font-family: 'icomoon';
+  font-size: 1rem;
+  font-weight: 400;
+}
+/* #endregion Videos*/
+
+/* #region Pagination */
+.btn-pagination {
+  margin: 0.25rem;
+  min-width: 2.5rem;
+  min-height: 1.5rem;
+  padding: 0.25rem;
+}
+
+.btn-pagination.active {
+  color: #fff;
+  background: royalblue;
+}
+
+.btn-wrapper .btn-prev-box {
+  flex-grow: 1;
+  text-align: left;
+}
+
+.btn-wrapper .btn-prev:before {
+  content: "\ea38";
+  margin-right: 0.5rem;
+  color: #fff;
+  font-family: 'icomoon';
+  font-weight: 400;
+  font-size: 1rem;
+}
+
+.btn-wrapper .btn-next-box {
+  flex-grow: 1;
+  text-align: right;
+}
+
+.btn-wrapper .btn-next:after {
+  content: "\ea34";
+  margin-left: 0.5rem;
+  color: #fff;
+  font-family: 'icomoon';
+  font-weight: 400;
+  font-size: 1rem;
+}
+/* #endregion Pagination */ 
+
+/* Scroll to top button */
+#myBtn {
+    display: block; /* Hidden by default */
+    position: fixed; /* Fixed/sticky position */
+    bottom: 1rem; /* Place the button at the bottom of the page */
+    right: 1rem; /* Place the button 30px from the right */
+    z-index: 99; /* Make sure it does not overlap */
+    border: 1px solid #fff; /* Remove borders */
+    outline: none; /* Remove outline */
+    background-color: purple; /* Set a background color */
+    color: white; /* Text color */
+    cursor: pointer; /* Add a mouse pointer on hover */
+    padding: 15px; /* Some padding */
+    border-radius: 10px; /* Rounded corners */
+    font-family: 'icomoon';
+    font-size: 1rem;
+  }
+  
+  #myBtn:hover {
+    background-color: #555; /* Add a dark-grey background on hover */
+  }
+
+  #myBtn:before {
+    content: '\ea32';
+  }
+
+  .pagination {
+    text-align: center;
+  }
+
+  .footer {
+    margin-top: 1rem;
+    border-top: 0.25rem solid purple;
+    min-height: 8rem;
+    background: #f2f2f2;
+  }
+
+  .ft-series .link-series {
+    background: #9e9e9e;
+  }
+
+  /* Grid system */
+  .container {
+    padding-right: 12px;
+    padding-left: 12px;
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+  .grid-col-2 {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @media (min-width: 576px) {
+    .container {
+      width: 540px;
+    }
+    .grid-col-sm-2 {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .container {
+      width: 750px;
+    }
+    .grid-col-md-2 {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (min-width: 992px) {
+    .container {
+      width: 970px;
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .container {
+      width: 1170px;
+    }
+    .grid-col-xl-3 {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+    .grid-col-xl-4 {
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+  }
+
+  @media (min-width: 1400px) {
+    .container {
+      width: 1320px;
+    }
+    .grid-col-xxl-4 {
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+  }
+
+  @media (max-width: 575px) {
+    .grid-col-xs-1 {
+      grid-template-columns: 1fr;
+    }
+  }

@@ -1,0 +1,162 @@
+/*#region Fonts */
+@font-face {
+    font-family: 'Aileron';
+    src: url('https://cdn.kukui.com/fonts/aileron/aileron-regular-webfont.eot');
+    src: url('https://cdn.kukui.com/fonts/aileron/aileron-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('https://cdn.kukui.com/fonts/aileron/aileron-regular-webfont.woff2') format('woff2'),
+         url('https://cdn.kukui.com/fonts/aileron/aileron-regular-webfont.woff') format('woff'),
+         url('https://cdn.kukui.com/fonts/aileron/aileron-regular-webfont.ttf') format('truetype'),
+         url('https://cdn.kukui.com/fonts/aileron/aileron-regular-webfont.svg#aileronregular') format('svg');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Aileron';
+    src: url('https://cdn.kukui.com/fonts/aileron/aileron-bold-webfont.eot');
+    src: url('https://cdn.kukui.com/fonts/aileron/aileron-bold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('https://cdn.kukui.com/fonts/aileron/aileron-bold-webfont.woff2') format('woff2'),
+         url('https://cdn.kukui.com/fonts/aileron/aileron-bold-webfont.woff') format('woff'),
+         url('https://cdn.kukui.com/fonts/aileron/aileron-bold-webfont.ttf') format('truetype'),
+         url('https://cdn.kukui.com/fonts/aileron/aileron-bold-webfont.svg#aileronbold') format('svg');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Bebas';
+    font-weight: 400;
+    font-style: normal;
+    src: url('https://cdn.kukui.com/fonts/bebas-neue/bebasneue_regular-webfont.woff2') format('woff2'),
+         url('https://cdn.kukui.com/fonts/bebas-neue/bebasneue_regular-webfont.woff') format('woff'),
+         url('https://cdn.kukui.com/fonts/bebas-neue/bebasneue_regular-webfont.ttf') format('truetype');
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Bebas';
+    font-weight: 700;
+    font-style: normal;
+    src: url('https://cdn.kukui.com/fonts/bebas-neue/bebasneue_bold-webfont.woff2') format('woff2'),
+         url('https://cdn.kukui.com/fonts/bebas-neue/bebasneue_bold-webfont.woff') format('woff'),
+         url('https://cdn.kukui.com/fonts/bebas-neue/bebasneue_bold-webfont.ttf') format('truetype');
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Oswald';
+    font-weight: 300;
+    font-style: normal;
+    src: url('https://cdn.kukui.com/fonts/oswald/oswald-light-webfont.woff2') format('woff2'),
+         url('https://cdn.kukui.com/fonts/oswald/oswald-light-webfont.woff') format('woff'),
+         url('https://cdn.kukui.com/fonts/oswald/oswald-light-webfont.ttf') format('truetype');
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Oswald';
+    font-weight: 400;
+    font-style: normal;
+    src: url('https://cdn.kukui.com/fonts/oswald/oswald-regular-webfont.woff2') format('woff2'),
+         url('https://cdn.kukui.com/fonts/oswald/oswald-regular-webfont.woff') format('woff'),
+         url('https://cdn.kukui.com/fonts/oswald/oswald-regular-webfont.ttf') format('truetype');
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Oswald';
+    font-weight: 500;
+    font-style: normal;
+    src: url('https://cdn.kukui.com/fonts/oswald/oswald-medium-webfont.woff2') format('woff2'),
+         url('https://cdn.kukui.com/fonts/oswald/oswald-medium-webfont.woff') format('woff'),
+         url('https://cdn.kukui.com/fonts/oswald/oswald-medium-webfont.ttf') format('truetype');
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    font-weight: 300;
+    font-style: normal;
+    src: url('https://cdn.kukui.com/fonts/roboto/roboto-light-webfont.woff2') format('woff2'),
+         url('https://cdn.kukui.com/fonts/roboto/roboto-light-webfont.woff') format('woff'),
+         url('https://cdn.kukui.com/fonts/roboto/roboto-light-webfont.ttf') format('truetype');
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('https://cdn.kukui.com/fonts/roboto/roboto-black-webfont.eot');
+    src: url('https://cdn.kukui.com/fonts/roboto/roboto-black-webfont.eot?#iefix') format('embedded-opentype'),
+         url('https://cdn.kukui.com/fonts/roboto/roboto-black-webfont.woff2') format('woff2'),
+         url('https://cdn.kukui.com/fonts/roboto/roboto-black-webfont.woff') format('woff'),
+         url('https://cdn.kukui.com/fonts/roboto/roboto-black-webfont.ttf') format('truetype'),
+         url('https://cdn.kukui.com/fonts/roboto/roboto-black-webfont.svg#robotoblack') format('svg');
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('https://cdn.kukui.com/fonts/roboto/roboto-regular-webfont.eot');
+    src: url('https://cdn.kukui.com/fonts/roboto/roboto-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('https://cdn.kukui.com/fonts/roboto/roboto-regular-webfont.woff2') format('woff2'),
+         url('https://cdn.kukui.com/fonts/roboto/roboto-regular-webfont.woff') format('woff'),
+         url('https://cdn.kukui.com/fonts/roboto/roboto-regular-webfont.ttf') format('truetype'),
+         url('https://cdn.kukui.com/fonts/roboto/roboto-regular-webfont.svg#robotoregular') format('svg');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Barlow';
+	font-weight: 400;
+    font-style: normal;
+    src: url('https://cdn.kukui.com/fonts/barlow-condensed/barlowcondensed-regular-webfont.woff2') format('woff2'),
+         url('https://cdn.kukui.com/fonts/barlow-condensed/barlowcondensed-regular-webfont.woff') format('woff'),
+         url('https://cdn.kukui.com/fonts/barlow-condensed/barlowcondensed-regular-webfont.ttf') format('truetype');
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Barlow';
+	font-weight: 700;
+    font-style: normal;
+    src: url('https://cdn.kukui.com/fonts/barlow-condensed/barlowcondensed-bold-webfont.woff2') format('woff2'),
+         url('https://cdn.kukui.com/fonts/barlow-condensed/barlowcondensed-bold-webfont.woff') format('woff'),
+         url('https://cdn.kukui.com/fonts/barlow-condensed/barlowcondensed-bold-webfont.ttf') format('truetype');
+    font-display: swap;
+}
+/*#endregion Fonts*/
+
+/*#region Glyphs */
+@font-face {
+    font-family: 'icomoon';
+    src:  url('./fonts/icomoon.eot?qveuvp');
+    src:  url('./fonts/icomoon.eot?qveuvp#iefix') format('embedded-opentype'),
+      url('./fonts/icomoon.ttf?qveuvp') format('truetype'),
+      url('./fonts/icomoon.woff?qveuvp') format('woff'),
+      url('./fonts/icomoon.svg?qveuvp#icomoon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: block;
+  }
+
+  [class^="icon-"], [class*=" icon-"] {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'icomoon' !important;
+    speak: never;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+  
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+/*#endregion*/
