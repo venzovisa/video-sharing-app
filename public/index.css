@@ -8,11 +8,11 @@ html {
 
 .header {
   margin-bottom: 1rem;
-  border-bottom: 0.25rem solid purple;
+  border-bottom: 0.25rem solid #b4ff00;
 }
 
 h2 {
-  color: purple;
+  color: #b4ff00;
 }
 
 img,
@@ -30,14 +30,14 @@ iframe {
   border: none;
   border-radius: 0.5rem;
   min-width: 7rem; 
-  color: #fff;
-  font-weight: 400;
+  color: #002340;
+  font-weight: 600;
   font-size: 1.125rem;
   font-family: 'Barlow', Arial, Helvetica, sans-serif; 
   text-transform: uppercase;
   text-decoration: none;
   text-align: center;
-  background-color: purple;
+  background-color: #b4ff00;
   cursor: pointer;
 }
 
@@ -66,7 +66,7 @@ iframe {
 .videos-item .box {
   position: relative;
   margin-bottom: 1rem;
-  border-top: 0.125rem solid purple;
+  border-top: 0.125rem solid #b4ff00;
   border-radius: 0.25rem;
   -webkit-box-shadow: 0 1px 1px rgb(0 0 0 / 3%), 0 1px 2px rgb(0 0 0 / 3%), 0 0 2px rgb(0 0 0 / 3%), 0 3px 4px rgb(0 0 0 / 3%);
   box-shadow: 0 1px 1px rgb(0 0 0 / 3%), 0 1px 2px rgb(0 0 0 / 3%), 0 0 2px rgb(0 0 0 / 3%), 0 3px 4px rgb(0 0 0 / 3%);
@@ -149,10 +149,14 @@ iframe {
 .videos-item .btn-play:before {
   content: "\ea15";
   margin-right: 0.5rem;
-  color: #fff;
+  color: #002340;
   font-family: 'icomoon';
   font-size: 1rem;
-  font-weight: 400;
+  font-weight: 600;
+}
+
+.videos-item .btn-play:hover:before {
+  color: #ffffff;
 }
 
 .videos-item .btn-gallery {
@@ -162,11 +166,16 @@ iframe {
 .videos-item .btn-gallery:before {
   content: "\e90e";
   margin-right: 0.5rem;
-  color: #fff;
+  color: #002340;
   font-family: 'icomoon';
   font-size: 1rem;
-  font-weight: 400;
+  font-weight: 600;
 }
+
+.videos-item .btn-gallery:hover:before {
+  color: #ffffff;
+}
+
 /* #endregion Videos*/
 
 /* #region Pagination */
@@ -178,8 +187,8 @@ iframe {
 }
 
 .btn-pagination.active {
-  color: #fff;
-  background: royalblue;
+  color: #002340;
+  background: #b4ff00;
 }
 
 .btn-wrapper .btn-prev-box {
@@ -190,10 +199,14 @@ iframe {
 .btn-wrapper .btn-prev:before {
   content: "\ea38";
   margin-right: 0.5rem;
-  color: #fff;
+  color: #002340;
   font-family: 'icomoon';
   font-weight: 400;
   font-size: 1rem;
+}
+
+.btn-wrapper .btn-prev:hover:before {
+  color: #ffffff;
 }
 
 .btn-wrapper .btn-next-box {
@@ -204,10 +217,14 @@ iframe {
 .btn-wrapper .btn-next:after {
   content: "\ea34";
   margin-left: 0.5rem;
-  color: #fff;
+  color: #002340;
   font-family: 'icomoon';
   font-weight: 400;
   font-size: 1rem;
+}
+
+.btn-wrapper .btn-next:hover:after {
+  color: #ffffff;
 }
 /* #endregion Pagination */ 
 
@@ -220,7 +237,7 @@ iframe {
     z-index: 99; /* Make sure it does not overlap */
     border: 1px solid #fff; /* Remove borders */
     outline: none; /* Remove outline */
-    background-color: purple; /* Set a background color */
+    background-color: #b4ff00; /* Set a background color */
     color: white; /* Text color */
     cursor: pointer; /* Add a mouse pointer on hover */
     padding: 15px; /* Some padding */
@@ -243,7 +260,7 @@ iframe {
 
   .footer {
     margin-top: 1rem;
-    border-top: 0.25rem solid purple;
+    border-top: 0.25rem solid #b4ff00;
     min-height: 8rem;
     background: #f2f2f2;
   }

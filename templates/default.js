@@ -10,7 +10,7 @@ export default (main) => {
     <body>
     ${header}
     <main class="container main">
-    <section class="d-flex">
+      <section class="d-flex">
         <div class="mb-3 col-5 browse-counter"></div>
         <div class="mb-3 col-7 btn-items-box">
           <button class="btn-items" value="12">12</button>
