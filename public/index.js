@@ -18,30 +18,63 @@ const footerPusher = () => {
 
 const renderPagination = ({ pages, itemsPerPage, currentPage }) => {
   let buttons = "";
-  const length = Math.ceil(pages.length / itemsPerPage);
-  const offset = currentPage + 4;
-  let end = offset > length ? length : offset;
-  if (offset > length) {
-    for (let item = 1; item <= length; item++) {
-      buttons += `<button class="btn-pagination" value="${item}">${item}</button>`;
-    }
-  } else {
-    for (
-      let item = length - currentPage < 4 ? length - 4 : currentPage;
-      item <= end;
-      item++
-    ) {
-      buttons += `<button class="btn-pagination" value="${item}">${item}</button>`;
-    }
-  }
+  //const length = Math.ceil(pages.length / itemsPerPage);
+  //const offset = currentPage + 4;
+  //let end = offset > length ? length : offset;
+  // for (let item = 1; item <= length; item++) {
+  //   buttons += `<button class="btn-pagination" value="${item}">${item}</button>`;
+  // }
+
+  buttons = `
+  <button class="btn-pagination" value="${currentPage}">${currentPage}</button>
+  ${pages > 12 ? '<button class="btn-pagination" value="${currentPage+1}">${currentPage+1}</button>' +
+  '<button class="btn-pagination" value="${currentPage+2}">${currentPage+2}</button>' : ''}
+  `;
+
+  // Previous pages
+  // const previousPages = currentPage - 2; 
+  // for (let item = previousPages > 0 ? previousPages : 1; item < currentPage + 1; item++) {
+  //   buttons += `<button class="btn-pagination" value="${item}">${item}</button>`;
+  // }
+
+  // Current page
+  //buttons += `<button class="btn-pagination" value="${currentPage+1}">${currentPage+1}</button>`;
+
+  // Next pages
+  // const nextPages = currentPage + 1; 
+  // for (let item = nextPages; item < length; item++) {
+  //   buttons += `<button class="btn-pagination" value="${item}">${item}</button>`;
+  // }
+
+  // if (offset > length) {
+  //   for (let item = 1; item <= length; item++) {
+  //     buttons += `<button class="btn-pagination" value="${item}">${item}</button>`;
+  //   }
+  // } else {
+  //   for (
+  //     let item = length - currentPage < 4 ? length - 4 : currentPage;
+  //     item <= end;
+  //     item++
+  //   ) {
+  //     buttons += `<button class="btn-pagination" value="${item}">${item}</button>`;
+  //   }
+  // }
 
   return buttons;
 };
 
 const lazyLoad = () => {
-  Array.from(document.querySelectorAll("img")).map((img) => {
-    img.src = img.dataset.src;
-  });
+  const isPrivateModeEnabled = JSON.parse(window.localStorage.getItem("videoSharingApp"))?.isPrivateModeEnabled;
+
+  if (isPrivateModeEnabled) {
+    Array.from(document.querySelectorAll("img")).map((img) => {
+      img.src = "https://placehold.co/320x180";
+    });
+  } else {
+    Array.from(document.querySelectorAll("img")).map((img) => {
+      img.src = img.dataset.src;
+    });
+  }
 };
 
 const switchPages = (domClass, pages, itemsPerPage, currentPage) => {
@@ -75,8 +108,8 @@ const pageCounter = () => {
     } - ${state.pages.length}`;
   } else {
     document.querySelector(".page-counter").innerHTML = `${
-      state.currentPage * state.itemsPerPage + 1
-    } - ${state.currentPage * state.itemsPerPage + state.itemsPerPage}`;
+      (state.currentPage - 1) * state.itemsPerPage + 1
+    } - ${(state.currentPage - 1) * state.itemsPerPage + state.itemsPerPage + 1}`;
   }
 };
 
@@ -90,19 +123,22 @@ const paginationHandler = () => {
         item.classList.remove("active");
       }
 
-      item.classList.add("active");
       state.currentPage = Number(e.target.value);
+      updateActivePage();
+
       switchPages(
         ".videos-list",
         state.pages,
         state.itemsPerPage,
         state.currentPage
       );
+    
     });
   }
   pageCounter();
 };
 
+// 12, 24, 48
 const switchItemsPerPage = () => {
   const buttons = document.querySelectorAll(".btn-items");
 
@@ -130,11 +166,44 @@ const updateActivePage = () => {
     item.classList.remove("active");
   }
 
-  if (state.currentPage < 1 || state.currentPage > query.length) {
+  if (state.currentPage === 1) {
+    query[0].value = state.currentPage;
+    query[0].textContent = state.currentPage;
     query[0].classList.add("active");
+
+    query[1].value = state.currentPage + 1;
+    query[1].textContent = state.currentPage + 1;
+
+    query[2].value = state.currentPage + 2;
+    query[2].textContent = state.currentPage + 2;
+  } else if (state.currentPage > state.pages.length / state.itemsPerPage) {
+    query[0].value = state.currentPage - 2;
+    query[0].textContent = state.currentPage - 2;
+
+    query[1].value = state.currentPage - 1;
+    query[1].textContent = state.currentPage - 1;
+
+    query[2].value = state.currentPage;
+    query[2].textContent = state.currentPage;
+    query[2].classList.add("active");
   } else {
-    query[state.currentPage - 1].classList.add("active");
+    query[0].value = state.currentPage - 1;
+    query[0].textContent = state.currentPage - 1;
+
+    query[1].value = state.currentPage;
+    query[1].textContent = state.currentPage;
+    query[1].classList.add("active");
+
+    query[2].value = state.currentPage + 1;
+    query[2].textContent = state.currentPage + 1;
   }
+
+  //query[1].classList.add("active");
+  // if (state.currentPage < 1 || state.currentPage > query.length) {
+  //   query[0].classList.add("active");
+  // } else {
+  //   query[state.currentPage - 1].classList.add("active");
+  // }
 };
 
 const renderFooterSeries = () => {
@@ -244,7 +313,12 @@ window.addEventListener("DOMContentLoaded", () => {
       state.itemsPerPage,
       state.currentPage
     );
-    paginationHandler();
+
+    if (state.pages.length > state.itemsPerPage) {
+      paginationHandler();
+    } else {
+      document.querySelector(".pagination").remove();
+    }
   };
 
   document.querySelector(".link-liked").addEventListener("click", (e) => {
@@ -266,7 +340,11 @@ window.addEventListener("DOMContentLoaded", () => {
       state.itemsPerPage,
       state.currentPage
     );
-    paginationHandler();
+    if (state.pages.length > state.itemsPerPage) {
+      paginationHandler();
+    } else {
+      document.querySelector(".pagination").remove();
+    }
   });
 
   // Search form
@@ -329,7 +407,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
     btnNext.addEventListener("click", (e) => {
       const end = Math.ceil(state.pages.length / state.itemsPerPage);
-      if (state.currentPage + 4 < end) {
+      if (state.currentPage < end) {
         state.currentPage++;
       }
 
@@ -362,6 +440,19 @@ window.addEventListener("DOMContentLoaded", () => {
   }
 
   footerPusher();
+
+  document.querySelector("#private-mode").addEventListener("click", (e) => {
+    console.log("#toggle-private-mode");
+    const isPrivateModeEnabled = JSON.parse(window.localStorage.getItem("videoSharingApp"))?.isPrivateModeEnabled;
+
+    if (isPrivateModeEnabled) {
+      window.localStorage.setItem("videoSharingApp", JSON.stringify({ isPrivateModeEnabled: !isPrivateModeEnabled }));
+    } else {
+      window.localStorage.setItem("videoSharingApp", JSON.stringify({ isPrivateModeEnabled: true }));
+    };
+
+    lazyLoad();
+  });
 });
 
 // Scroll to top button

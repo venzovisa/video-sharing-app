@@ -12,7 +12,7 @@ html {
 }
 
 h2 {
-  color: #b4ff00;
+  color: #002340;
 }
 
 img,
@@ -235,10 +235,10 @@ iframe {
     bottom: 1rem; /* Place the button at the bottom of the page */
     right: 1rem; /* Place the button 30px from the right */
     z-index: 99; /* Make sure it does not overlap */
-    border: 1px solid #fff; /* Remove borders */
+    border: 1px solid #002340; /* Remove borders */
     outline: none; /* Remove outline */
     background-color: #b4ff00; /* Set a background color */
-    color: white; /* Text color */
+    color: #002340; /* Text color */
     cursor: pointer; /* Add a mouse pointer on hover */
     padding: 15px; /* Some padding */
     border-radius: 10px; /* Rounded corners */
@@ -247,6 +247,7 @@ iframe {
   }
   
   #myBtn:hover {
+    color: #ffffff;
     background-color: #555; /* Add a dark-grey background on hover */
   }
 

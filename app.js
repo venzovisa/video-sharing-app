@@ -4,6 +4,7 @@ import path from "path";
 import { readdir, readFile, writeFile } from "fs/promises";
 import renderDefault from "./templates/default.js";
 import renderGallery from "./templates/gallery.js";
+import renderPagination from "./templates/pagination.js";
 const app = express();
 const port = 80;
 //const randomPort = Math.floor(Math.random() * 10000);
@@ -40,6 +41,10 @@ const nameParser = (string, regex) => {
 // Root route data load
 const loadData = async () => {
   const files = await readdir(`${__dirname}/videos`);
+  if (files.length === 0) {
+    return "<strong>No content found</strong>";
+  }
+
   let response = `
       <section class="d-sm-flex flex-sm-wrap videos-list">
     `;
@@ -135,10 +140,10 @@ const loadData = async () => {
           <a href="/${item}" title="${
         images[0]
       }" target="_blank" class="d-block mb-3 ${linkImage}">
-            <img src="https://via.placeholder.com/320x180" data-src="/${item}/${
+            <img src="https://placehold.co/320x180" data-src="/${item}/${
         //images[randomImage < images.length ? randomImage : 0]
         images[0]
-      }" alt="${images[0]}" class="rounded-2" />
+      }" alt="${item}" class="rounded-2" />
           </a>
         `;
 
@@ -156,40 +161,30 @@ const loadData = async () => {
           : "";
 
       response += `
-      <article class="col-xs-12 col-sm-12 col-md-6 col-xl-4 col-xxl-3 p-2 videos-item" data-date="${date}" data-series="${series}" data-title="${item}" data-status="${liked}">
-        <div class="pb-2 px-1 box">
+      <article class="d-flex align-self-stretch col-xs-12 col-sm-12 col-md-6 col-xl-4 col-xxl-3 p-2 videos-item" data-date="${date}" data-series="${series}" data-title="${item}" data-status="${liked}">
+        <div class="overflow-hidden pb-2 px-1 box">
           ${btnLiked}
           <div class="d-flex py-2">
             <p class="mb-0 col-4 date">${date}</p>
-            <p class="mb-0 col-8 series">
+            <p class="mb-0 col-8 series text-truncate">
               <a href="/" data-series="${series}" title="${series}" class="d-inline-block px-1 bg-dark link-series text-white">${series}</a>
             </p>
           </div>  
           ${imagesTemplate}
+          <p class="overflow-hidden text-truncate">${item}</p>
           <p class="name">
             <a href="/" data-name="${name}" title="${name}" class="link-name">${name}</a>
           </p>
           <a href="/${item}" title="${item}" target="_blank" class="btn btn-gallery">Gallery</a>
           ${btnPlayTemplate}
-        </div>  
+        </div>
       </article> 
       `;
     } // File type check
   }
   response += `
     </section>
-        <section class="pagination">
-          <div class="pagination-container"></div>
-          <div class="page-counter"></div>
-          <div class="d-flex align-items-center my-3 btn-wrapper">
-            <div class="btn-prev-box">
-              <button class="btn btn-prev">Previous</button>
-            </div>
-            <div class="btn-next-box">
-              <button class="btn btn-next">Next</button>
-            </div>
-          </div>
-        </section>
+        ${renderPagination}
     `;
   return response;
 };
@@ -216,6 +211,13 @@ try {
     const files = input.filter((entry) =>
       query.some((item) => entry.toLowerCase().includes(item.toLowerCase()))
     );
+
+    if (files.length === 0) {
+      res.send("<strong>No content found</strong>");
+      res.end();
+      return;
+    }
+
     let response = `
         <section class="d-sm-flex flex-sm-wrap videos-list">
       `;
@@ -294,7 +296,7 @@ try {
         }" target="_blank" class="d-block mb-3 ${linkImage}">
               <img src="https://via.placeholder.com/320x180" data-src="/${item}/${
           images[randomImage < images.length ? randomImage : 0]
-        }" alt="${images[0]}" />
+        }" alt="${item}" />
             </a>
           `;
 
@@ -304,7 +306,7 @@ try {
             ${btnLiked}
             <div class="d-flex py-2">
               <p class="mb-0 col-4 date">${date}</p>
-              <p class="mb-0 col-8 series">
+              <p class="mb-0 col-8 series text-truncate">
                 <a href="/" data-series="${series}" title="${series}" class="d-inline-block px-1 bg-dark link-series text-white">${series}</a>
               </p>
             </div>  
@@ -319,21 +321,7 @@ try {
         `;
       } // File type check
     }
-    response += `
-      </section>
-          <section class="pagination">
-            <div class="pagination-container"></div>
-            <div class="page-counter"></div>
-            <div class="d-flex align-items-center my-3 btn-wrapper">
-              <div class="btn-prev-box">
-                <button class="btn btn-prev">Previous</button>
-              </div>
-              <div class="btn-next-box">
-                <button class="btn btn-next">Next</button>
-              </div>
-            </div>
-          </section>
-      `;
+    response += `</section>`;
     res.send(response);
     res.end();
   });
@@ -350,19 +338,20 @@ try {
       await readFile(`${__dirname}/videos/${folder}/nfo.json`)
     );
 
-    if (status === "liked") {
-      fileData.liked = true;
+    const updateFile = async (fileData) => {
       await writeFile(
         `${__dirname}/videos/${folder}/nfo.json`,
         JSON.stringify(fileData, null, 2)
       );
+    };
+
+    if (status === "liked") {
+      fileData.liked = true;
+      await updateFile(fileData);
       res.sendStatus(200);
     } else if (status === "unliked") {
       fileData.liked = false;
-      await writeFile(
-        `${__dirname}/videos/${folder}/nfo.json`,
-        JSON.stringify(fileData, null, 2)
-      );
+      await updateFile(fileData);
       res.sendStatus(200);
     } else {
       res.sendStatus(400);
@@ -468,7 +457,7 @@ try {
       `${req.params.folder}/${req.params.file}`,
       req.params.file,
       (err) => {
-        console.log(err);
+        console.error(err);
         res.sendStatus(400);
       }
     );
