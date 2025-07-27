@@ -5,6 +5,7 @@ import { dateParser, nameParser, seriesParser } from "../utils.js";
 import getImageTemplate from "../templates/image.js";
 
 export const searchHandler = async (req, res) => {
+  console.log(`${req.method} ${req.url}`);
   const input = await readdir(`${__dirname}/videos`);
   const query = req.params.query.split(" ");
   const files = input.filter((entry) =>
@@ -44,6 +45,8 @@ export const searchHandler = async (req, res) => {
       let linkImage = "";
       let btnLiked = "";
       let liked = false;
+      let watched = false;
+      let btnWatched = "";
 
       // Remote link
       if (json.length > 0 && video.length === 0) {
@@ -56,8 +59,12 @@ export const searchHandler = async (req, res) => {
         btnPlayURL = `${fileData.url}!1a`;
         linkImage = "link-image";
         liked = fileData.liked;
+        watched = fileData.watched || false;
         btnLiked = `<span title="Add to favorite" class="btn-liked${
           liked ? " active" : ""
+        }"></span>`;
+        btnWatched = `<span title="Add to watched" class="btn-watched${
+          watched ? " active" : ""
         }"></span>`;
         // Local file and nfo.json
       } else if (json.length > 0 && video.length > 0) {
@@ -72,6 +79,9 @@ export const searchHandler = async (req, res) => {
         btnLiked = `<span title="Add to favorite" class="btn-liked${
           liked ? " active" : ""
         }"></span>`;
+        btnWatched = `<span title="Add to watched" class="btn-watched${
+          watched ? " active" : ""
+        }"></span>`;
         // Local file
       } else {
         date = dateParser(item);
@@ -85,17 +95,20 @@ export const searchHandler = async (req, res) => {
         continue;
 
       // Single image
-      response += getImageTemplate({
-        btnLiked,
-        btnPlayURL,
-        date,
-        item,
-        images,
-        linkImage,
-        series,
-        name,
-        liked,
-      });
+      response +=
+        getImageTemplate({
+          btnLiked,
+          btnPlayURL,
+          date,
+          item,
+          images,
+          linkImage,
+          series,
+          name,
+          liked,
+          watched,
+          btnWatched,
+        }) || "";
     } // File type check
   }
   response += `</section>`;

@@ -4,7 +4,7 @@ import renderDefault from "../templates/default.js";
 import renderPagination from "../templates/pagination.js";
 import getImageTemplate from "../templates/image.js";
 const __dirname = path.resolve();
-import { dateParser, nameParser, seriesParser } from "../utils.js";
+import { dateParser, isFolder, nameParser, seriesParser } from "../utils.js";
 
 const loadData = async () => {
   const files = await readdir(`${__dirname}/videos`);
@@ -18,14 +18,7 @@ const loadData = async () => {
 
   // Render videos
   for await (const item of files) {
-    if (
-      !item.endsWith(".mp4") &&
-      !item.endsWith(".ico") &&
-      !item.endsWith(".png") &&
-      !item.endsWith(".css") &&
-      !item.endsWith(".js") &&
-      !item.includes("@")
-    ) {
+    if (isFolder(item)) {
       const files = await readdir(`${__dirname}/videos/${item}`);
       const video = files.filter((item) => item.endsWith(".mp4"));
       const images = files.filter(
@@ -61,6 +54,7 @@ const loadData = async () => {
             ? "link-image"
             : "";
         liked = fileData.liked;
+        watched = fileData.watched || false;
         btnLiked = `<span title="Add to favorite" class="btn-liked${
           liked ? " active" : ""
         }"></span>`;
@@ -73,6 +67,8 @@ const loadData = async () => {
         const fileData = JSON.parse(
           await readFile(`${__dirname}/videos/${item}/nfo.json`)
         );
+        // Skip watched
+        if (fileData.watched) continue;
         date = fileData.date;
         name = fileData.name;
         series = fileData.series;
@@ -87,7 +83,7 @@ const loadData = async () => {
         }"></span>`;
         // Local file
       } else {
-        date = dateParser(item);
+        date = item;
         //name = nameParser(item);
         series = seriesParser(item);
         btnPlayURL = `/${item}/${video[0]}`;

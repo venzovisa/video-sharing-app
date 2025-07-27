@@ -2,9 +2,9 @@ import { readFile, writeFile } from "fs/promises";
 import path from "path";
 const __dirname = path.resolve();
 
-export const watchHandler = async (req, res) => {
-  const { folder, watched } = req.params;
-  console.log(folder, watched);
+export const likeHandler = async (req, res) => {
+  console.log(`${req.method} ${req.url}`);
+  const { folder, status } = req.params;
   const fileData = JSON.parse(
     await readFile(`${__dirname}/videos/${folder}/nfo.json`)
   );
@@ -16,12 +16,12 @@ export const watchHandler = async (req, res) => {
     );
   };
 
-  if (watched === "watched") {
-    fileData.watched = true;
+  if (status === "liked") {
+    fileData.liked = true;
     await updateFile(fileData);
     res.sendStatus(200);
-  } else if (watched === "unwatched") {
-    fileData.watched = false;
+  } else if (status === "unliked") {
+    fileData.liked = false;
     await updateFile(fileData);
     res.sendStatus(200);
   } else {

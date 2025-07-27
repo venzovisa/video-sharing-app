@@ -3,12 +3,12 @@ import cors from "cors";
 const app = express();
 const port = 80;
 //const randomPort = Math.floor(Math.random() * 10000);
-import { rootHandler } from "./routeHandlers/root.js";
-import { searchHandler } from "./routeHandlers/search.js";
-import { likeHandler } from "./routeHandlers/like.js";
-import { watchHandler } from "./routeHandlers/watch.js";
-import { galleryHandler } from "./routeHandlers/gallery.js";
-import { playHandler } from "./routeHandlers/play.js";
+import { rootHandler } from "./routes/index.js";
+import { searchHandler } from "./routes/index.js";
+import { likeHandler } from "./routes/index.js";
+import { watchHandler } from "./routes/index.js";
+import { galleryHandler } from "./routes/index.js";
+import { playHandler } from "./routes/index.js";
 
 app.use(cors());
 app.use(express.static("public"));

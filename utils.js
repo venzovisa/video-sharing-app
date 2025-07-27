@@ -27,3 +27,11 @@ export const nameParser = (
 
   return "N/A";
 };
+
+export const isFolder = (item) =>
+  !item.endsWith(".mp4") &&
+  !item.endsWith(".ico") &&
+  !item.endsWith(".png") &&
+  !item.endsWith(".css") &&
+  !item.endsWith(".js") &&
+  !item.includes("@");

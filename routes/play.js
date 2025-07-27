@@ -1,4 +1,5 @@
 export const playHandler = async (req, res) => {
+  console.log(`${req.method} ${req.url}`);
   res.set({
     "Content-Type": "video/mp4",
   });

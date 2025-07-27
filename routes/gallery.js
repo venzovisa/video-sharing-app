@@ -33,6 +33,7 @@ const generateGalleryTemplate = ({
 };
 
 export const galleryHandler = async (req, res) => {
+  console.log(`${req.method} ${req.url}`);
   const files = await readdir(`${__dirname}/videos/${req.params.folder}`);
   const video = files.filter((item) => item.endsWith(".mp4"));
   const images = files.filter(
@@ -53,7 +54,7 @@ export const galleryHandler = async (req, res) => {
   // Switch between local file and remote link
   if (json.length > 0 && video.length > 0) {
     videoTemplate = `
-        <video controls poster="/${req.params.folder}/${images[0]}">
+        <video controls muted poster="/${req.params.folder}/${images[0]}">
           <source src="/${req.params.folder}/${video[0]}" type="video/mp4">
           Your browser does not support the video tag.
         </video>
