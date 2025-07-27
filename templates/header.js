@@ -15,7 +15,13 @@ export default `
                             <a class="nav-link" aria-current="page" href="/">Home</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link link-new" aria-current="page" href="/">New</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link link-liked" aria-current="page" href="/">Liked</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link link-watched" aria-current="page" href="/">Watched</a>
                         </li>
                     </ul>
                     <form class="d-flex flex-column flex-xs-column flex-md-row form-search">

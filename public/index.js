@@ -27,12 +27,19 @@ const renderPagination = ({ pages, itemsPerPage, currentPage }) => {
 
   buttons = `
   <button class="btn-pagination" value="${currentPage}">${currentPage}</button>
-  ${pages > 12 ? '<button class="btn-pagination" value="${currentPage+1}">${currentPage+1}</button>' +
-  '<button class="btn-pagination" value="${currentPage+2}">${currentPage+2}</button>' : ''}
+  ${
+    pages.length > 12
+      ? `<button class="btn-pagination" value="${currentPage + 1}">${
+          currentPage + 1
+        }</button><button class="btn-pagination" value="${currentPage + 2}">${
+          currentPage + 2
+        }</button>`
+      : ""
+  }
   `;
 
   // Previous pages
-  // const previousPages = currentPage - 2; 
+  // const previousPages = currentPage - 2;
   // for (let item = previousPages > 0 ? previousPages : 1; item < currentPage + 1; item++) {
   //   buttons += `<button class="btn-pagination" value="${item}">${item}</button>`;
   // }
@@ -41,7 +48,7 @@ const renderPagination = ({ pages, itemsPerPage, currentPage }) => {
   //buttons += `<button class="btn-pagination" value="${currentPage+1}">${currentPage+1}</button>`;
 
   // Next pages
-  // const nextPages = currentPage + 1; 
+  // const nextPages = currentPage + 1;
   // for (let item = nextPages; item < length; item++) {
   //   buttons += `<button class="btn-pagination" value="${item}">${item}</button>`;
   // }
@@ -64,7 +71,9 @@ const renderPagination = ({ pages, itemsPerPage, currentPage }) => {
 };
 
 const lazyLoad = () => {
-  const isPrivateModeEnabled = JSON.parse(window.localStorage.getItem("videoSharingApp"))?.isPrivateModeEnabled;
+  const isPrivateModeEnabled = JSON.parse(
+    window.localStorage.getItem("videoSharingApp")
+  )?.isPrivateModeEnabled;
 
   if (isPrivateModeEnabled) {
     Array.from(document.querySelectorAll("img")).map((img) => {
@@ -109,7 +118,9 @@ const pageCounter = () => {
   } else {
     document.querySelector(".page-counter").innerHTML = `${
       (state.currentPage - 1) * state.itemsPerPage + 1
-    } - ${(state.currentPage - 1) * state.itemsPerPage + state.itemsPerPage + 1}`;
+    } - ${
+      (state.currentPage - 1) * state.itemsPerPage + state.itemsPerPage + 1
+    }`;
   }
 };
 
@@ -132,7 +143,6 @@ const paginationHandler = () => {
         state.itemsPerPage,
         state.currentPage
       );
-    
     });
   }
   pageCounter();
@@ -231,9 +241,9 @@ const renderFooterSeries = () => {
   }, []);
 };
 
-const handleBtnLiked = () => {
-  const btnLikedDOM = document.querySelectorAll(".btn-liked");
-  for (const btn of btnLikedDOM) {
+const toggleRouteHandler = (btnClass, activeURL, inactiveURL) => {
+  const btnDOM = document.querySelectorAll(btnClass);
+  for (const btn of btnDOM) {
     btn.addEventListener("click", (e) => {
       e.preventDefault();
       try {
@@ -241,19 +251,27 @@ const handleBtnLiked = () => {
         if (btn.classList.contains("active")) {
           btn.classList.remove("active");
           (async () => {
-            const response = await fetch(`${SERVER_URL}/${video}/unliked`);
+            await fetch(`${SERVER_URL}/${video}/${activeURL}`);
           })();
         } else {
           btn.classList.add("active");
           (async () => {
-            const response = await fetch(`${SERVER_URL}/${video}/liked`);
+            await fetch(`${SERVER_URL}/${video}/${inactiveURL}`);
           })();
         }
       } catch (err) {
-        console.log(err);
+        console.log("Unable to toggle active state on server", err);
       }
     });
   }
+};
+
+const handleBtnLiked = () => {
+  toggleRouteHandler(".btn-liked", "like/unliked", "like/liked");
+};
+
+const handleBtnWatched = () => {
+  toggleRouteHandler(".btn-watched", "watch/unwatched", "watch/watched");
 };
 
 window.addEventListener("DOMContentLoaded", () => {
@@ -272,8 +290,14 @@ window.addEventListener("DOMContentLoaded", () => {
     return 0;
   });
 
+  // Filter watched videos
+  // state.initialPages = Array.from(
+  //   document.querySelectorAll(".videos-item")
+  // ).filter((i) => i.dataset.watched !== "true");
+
   renderFooterSeries();
   handleBtnLiked();
+  handleBtnWatched();
 
   state.pages = [...state.initialPages];
 
@@ -283,6 +307,7 @@ window.addEventListener("DOMContentLoaded", () => {
     document.querySelector(".main").innerHTML = html;
     lazyLoad();
     handleBtnLiked();
+    handleBtnWatched();
     // state.pages = [...state.initialPages];
     // state.pages = state.pages.filter(entry => criteria.some(input => entry.dataset.title.toUpperCase().includes(input)));
     // state.currentPage = 1;
@@ -321,42 +346,36 @@ window.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  document.querySelector(".link-liked").addEventListener("click", (e) => {
-    e.preventDefault();
-    state.pages = [...state.initialPages];
-    state.pages = state.pages.filter(
-      (entry) => entry.dataset.status === "true"
-    );
-    state.currentPage = 1;
-    document.querySelector(".pagination-container").innerHTML =
-      renderPagination(state);
-    document.querySelector(".btn-pagination").classList.add("active");
-    document.querySelector(
-      ".browse-counter"
-    ).innerHTML = `<strong>Browse ${state.pages.length} files</strong>`;
-    switchPages(
-      ".videos-list",
-      state.pages,
-      state.itemsPerPage,
-      state.currentPage
-    );
-    if (state.pages.length > state.itemsPerPage) {
-      paginationHandler();
-    } else {
-      document.querySelector(".pagination").remove();
-    }
-  });
+  // Category handler
+  const categoryHandler = (btnClass, filterFn) => {
+    document.querySelector(btnClass).addEventListener("click", (e) => {
+      e.preventDefault();
+      state.pages = [...state.initialPages];
+      state.pages = state.pages.filter(filterFn);
+      state.currentPage = 1;
+      document.querySelector(".pagination-container").innerHTML =
+        renderPagination(state);
+      document.querySelector(".btn-pagination").classList.add("active");
+      document.querySelector(
+        ".browse-counter"
+      ).innerHTML = `<strong>Browse ${state.pages.length} files</strong>`;
+      switchPages(
+        ".videos-list",
+        state.pages,
+        state.itemsPerPage,
+        state.currentPage
+      );
+      if (state.pages.length > state.itemsPerPage) {
+        paginationHandler();
+      } else {
+        document.querySelector(".pagination").remove();
+      }
+    });
+  };
 
-  // Search form
-  document.querySelector(".form-search").addEventListener("submit", (e) => {
-    e.preventDefault();
-    const inputSearch = document
-      .querySelector(".input-search")
-      .value.trim()
-      .toUpperCase()
-      .split(" ");
-    searchByServer(inputSearch);
-  });
+  categoryHandler(".link-liked", (entry) => entry.dataset.status === "true");
+  categoryHandler(".link-watched", (entry) => entry.dataset.watched === "true");
+  categoryHandler(".link-new", (entry) => entry.dataset.watched === "false");
 
   // Search by property
   const linkNames = document.querySelectorAll(".link-name");
@@ -442,14 +461,21 @@ window.addEventListener("DOMContentLoaded", () => {
   footerPusher();
 
   document.querySelector("#private-mode").addEventListener("click", (e) => {
-    console.log("#toggle-private-mode");
-    const isPrivateModeEnabled = JSON.parse(window.localStorage.getItem("videoSharingApp"))?.isPrivateModeEnabled;
+    const isPrivateModeEnabled = JSON.parse(
+      window.localStorage.getItem("videoSharingApp")
+    )?.isPrivateModeEnabled;
 
     if (isPrivateModeEnabled) {
-      window.localStorage.setItem("videoSharingApp", JSON.stringify({ isPrivateModeEnabled: !isPrivateModeEnabled }));
+      window.localStorage.setItem(
+        "videoSharingApp",
+        JSON.stringify({ isPrivateModeEnabled: !isPrivateModeEnabled })
+      );
     } else {
-      window.localStorage.setItem("videoSharingApp", JSON.stringify({ isPrivateModeEnabled: true }));
-    };
+      window.localStorage.setItem(
+        "videoSharingApp",
+        JSON.stringify({ isPrivateModeEnabled: true })
+      );
+    }
 
     lazyLoad();
   });

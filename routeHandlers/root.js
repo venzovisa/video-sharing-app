@@ -44,6 +44,8 @@ const loadData = async () => {
       let btnLiked = "";
       let liked = false;
       let url = "";
+      let watched = false;
+      let btnWatched = "";
 
       // Remote link and nfo.json
       if (json.length > 0 && video.length === 0) {
@@ -53,7 +55,7 @@ const loadData = async () => {
         date = fileData.date;
         name = fileData.name;
         series = fileData.series;
-        btnPlayURL = `${fileData.url}!1a`;
+        btnPlayURL = `${fileData.url}`;
         linkImage =
           btnPlayURL && btnPlayURL !== "https://mega.nz/embed/link!1m!1a"
             ? "link-image"
@@ -61,6 +63,9 @@ const loadData = async () => {
         liked = fileData.liked;
         btnLiked = `<span title="Add to favorite" class="btn-liked${
           liked ? " active" : ""
+        }"></span>`;
+        btnWatched = `<span title="Add to watched" class="btn-watched${
+          watched ? " active" : ""
         }"></span>`;
         url = fileData.url;
         // Local file and nfo.json
@@ -73,13 +78,17 @@ const loadData = async () => {
         series = fileData.series;
         btnPlayURL = `/${item}/${video[0]}`;
         liked = fileData.liked;
+        watched = fileData.watched || false;
         btnLiked = `<span title="Add to favorite" class="btn-liked${
           liked ? " active" : ""
+        }"></span>`;
+        btnWatched = `<span title="Add to watched" class="btn-watched${
+          watched ? " active" : ""
         }"></span>`;
         // Local file
       } else {
         date = dateParser(item);
-        name = nameParser(item);
+        //name = nameParser(item);
         series = seriesParser(item);
         btnPlayURL = `/${item}/${video[0]}`;
         const createJSON = {
@@ -87,9 +96,10 @@ const loadData = async () => {
           date,
           url: "https://mega.nz/embed/link!1m",
           series,
-          name,
+          name: video[0],
           title: "",
           liked: false,
+          watched: false,
         };
         await writeFile(
           `${__dirname}/videos/${item}/nfo.json`,
@@ -108,6 +118,8 @@ const loadData = async () => {
         series,
         name,
         liked,
+        watched,
+        btnWatched,
       });
     } // File type check
   }

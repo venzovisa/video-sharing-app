@@ -6,6 +6,7 @@ const port = 80;
 import { rootHandler } from "./routeHandlers/root.js";
 import { searchHandler } from "./routeHandlers/search.js";
 import { likeHandler } from "./routeHandlers/like.js";
+import { watchHandler } from "./routeHandlers/watch.js";
 import { galleryHandler } from "./routeHandlers/gallery.js";
 import { playHandler } from "./routeHandlers/play.js";
 
@@ -29,9 +30,16 @@ try {
 
 // Liked video route
 try {
-  app.get("/:folder/:status", likeHandler);
+  app.get("/:folder/like/:status", likeHandler);
 } catch (err) {
   console.log("Error in GET /:folder/:status", err);
+}
+
+// Watched video route
+try {
+  app.get("/:folder/watch/:watched", watchHandler);
+} catch (err) {
+  console.log("Error in GET /:folder/:watch", err);
 }
 
 // Gallery

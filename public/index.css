@@ -1,7 +1,8 @@
 html {
   scroll-behavior: smooth;
-  font-family: 'Aileron', Arial, Helvetica, sans-serif, -apple-system, BlinkMacSystemFont,
-  'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: "Aileron", Arial, Helvetica, sans-serif, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell,
+    "Open Sans", "Helvetica Neue", sans-serif;
   font-weight: 400;
   font-size: 16px;
 }
@@ -18,22 +19,22 @@ h2 {
 img,
 video,
 iframe {
-  display: inline-block; 
-  width: 100%; 
+  display: inline-block;
+  width: 100%;
   height: auto;
   aspect-ratio: 16 / 9;
 }
 
 .btn {
   display: inline-block;
-  padding: 1rem; 
+  padding: 1rem;
   border: none;
   border-radius: 0.5rem;
-  min-width: 7rem; 
+  min-width: 7rem;
   color: #002340;
   font-weight: 600;
   font-size: 1.125rem;
-  font-family: 'Barlow', Arial, Helvetica, sans-serif; 
+  font-family: "Barlow", Arial, Helvetica, sans-serif;
   text-transform: uppercase;
   text-decoration: none;
   text-align: center;
@@ -68,11 +69,14 @@ iframe {
   margin-bottom: 1rem;
   border-top: 0.125rem solid #b4ff00;
   border-radius: 0.25rem;
-  -webkit-box-shadow: 0 1px 1px rgb(0 0 0 / 3%), 0 1px 2px rgb(0 0 0 / 3%), 0 0 2px rgb(0 0 0 / 3%), 0 3px 4px rgb(0 0 0 / 3%);
-  box-shadow: 0 1px 1px rgb(0 0 0 / 3%), 0 1px 2px rgb(0 0 0 / 3%), 0 0 2px rgb(0 0 0 / 3%), 0 3px 4px rgb(0 0 0 / 3%);
+  -webkit-box-shadow: 0 1px 1px rgb(0 0 0 / 3%), 0 1px 2px rgb(0 0 0 / 3%),
+    0 0 2px rgb(0 0 0 / 3%), 0 3px 4px rgb(0 0 0 / 3%);
+  box-shadow: 0 1px 1px rgb(0 0 0 / 3%), 0 1px 2px rgb(0 0 0 / 3%),
+    0 0 2px rgb(0 0 0 / 3%), 0 3px 4px rgb(0 0 0 / 3%);
 }
 
-.videos-item .btn-liked {
+.videos-item .btn-liked,
+.videos-item .btn-watched {
   z-index: 1;
   position: absolute;
   top: 3rem;
@@ -84,17 +88,28 @@ iframe {
   cursor: pointer;
 }
 
-.videos-item .btn-liked:before {
-  content: '\e9d7';
+.videos-item .btn-watched {
+  left: unset;
+  right: 0.75rem;
+}
+
+.videos-item .btn-liked:before,
+.videos-item .btn-watched:before {
+  content: "\e9d7";
   color: #ffeb3b;
-  font-family: 'icomoon';
+  font-family: "icomoon";
   font-weight: 400;
   font-size: 2rem;
   line-height: 1;
 }
 
-.videos-item .btn-liked.active:before {
-  content: '\e9d9';
+.videos-item .btn-liked.active:before,
+.videos-item .btn-watched.active:before {
+  content: "\e9d9";
+}
+
+.videos-item .btn-watched:before {
+  color: #ff006a;
 }
 
 .videos-item .link-image {
@@ -102,11 +117,11 @@ iframe {
 }
 
 .videos-item .link-image:before {
-  content: '';
+  content: "";
   z-index: 1;
   position: absolute;
-  top: .5rem;
-  right: .75rem;
+  top: 0.5rem;
+  right: 0.75rem;
   height: 32px;
   width: 32px;
   background: url(./mega.svg) no-repeat center;
@@ -118,14 +133,14 @@ iframe {
 }
 
 .videos-item .date {
-  font-family: 'Bebas', Arial, Helvetica, sans-serif;
+  font-family: "Bebas", Arial, Helvetica, sans-serif;
   font-weight: 400;
   font-size: 1rem;
   text-align: left;
 }
 
 .videos-item .series {
-  font-family: 'Oswald', Arial, Helvetica, sans-serif;
+  font-family: "Oswald", Arial, Helvetica, sans-serif;
   font-weight: 400;
   font-size: 1rem;
   text-align: right;
@@ -137,9 +152,10 @@ iframe {
 }
 
 .videos-item .name {
-  font-family: 'Oswald', Arial, Helvetica, sans-serif;
+  font-family: "Oswald", Arial, Helvetica, sans-serif;
   font-weight: 400;
   font-size: 1.25rem;
+  max-width: 320px;
 }
 
 .videos-item .btn-play {
@@ -150,7 +166,7 @@ iframe {
   content: "\ea15";
   margin-right: 0.5rem;
   color: #002340;
-  font-family: 'icomoon';
+  font-family: "icomoon";
   font-size: 1rem;
   font-weight: 600;
 }
@@ -167,7 +183,7 @@ iframe {
   content: "\e90e";
   margin-right: 0.5rem;
   color: #002340;
-  font-family: 'icomoon';
+  font-family: "icomoon";
   font-size: 1rem;
   font-weight: 600;
 }
@@ -200,7 +216,7 @@ iframe {
   content: "\ea38";
   margin-right: 0.5rem;
   color: #002340;
-  font-family: 'icomoon';
+  font-family: "icomoon";
   font-weight: 400;
   font-size: 1rem;
 }
@@ -218,7 +234,7 @@ iframe {
   content: "\ea34";
   margin-left: 0.5rem;
   color: #002340;
-  font-family: 'icomoon';
+  font-family: "icomoon";
   font-weight: 400;
   font-size: 1rem;
 }
@@ -226,109 +242,109 @@ iframe {
 .btn-wrapper .btn-next:hover:after {
   color: #ffffff;
 }
-/* #endregion Pagination */ 
+/* #endregion Pagination */
 
 /* Scroll to top button */
 #myBtn {
-    display: block; /* Hidden by default */
-    position: fixed; /* Fixed/sticky position */
-    bottom: 1rem; /* Place the button at the bottom of the page */
-    right: 1rem; /* Place the button 30px from the right */
-    z-index: 99; /* Make sure it does not overlap */
-    border: 1px solid #002340; /* Remove borders */
-    outline: none; /* Remove outline */
-    background-color: #b4ff00; /* Set a background color */
-    color: #002340; /* Text color */
-    cursor: pointer; /* Add a mouse pointer on hover */
-    padding: 15px; /* Some padding */
-    border-radius: 10px; /* Rounded corners */
-    font-family: 'icomoon';
-    font-size: 1rem;
-  }
-  
-  #myBtn:hover {
-    color: #ffffff;
-    background-color: #555; /* Add a dark-grey background on hover */
-  }
+  display: block; /* Hidden by default */
+  position: fixed; /* Fixed/sticky position */
+  bottom: 1rem; /* Place the button at the bottom of the page */
+  right: 1rem; /* Place the button 30px from the right */
+  z-index: 99; /* Make sure it does not overlap */
+  border: 1px solid #002340; /* Remove borders */
+  outline: none; /* Remove outline */
+  background-color: #b4ff00; /* Set a background color */
+  color: #002340; /* Text color */
+  cursor: pointer; /* Add a mouse pointer on hover */
+  padding: 15px; /* Some padding */
+  border-radius: 10px; /* Rounded corners */
+  font-family: "icomoon";
+  font-size: 1rem;
+}
 
-  #myBtn:before {
-    content: '\ea32';
-  }
+#myBtn:hover {
+  color: #ffffff;
+  background-color: #555; /* Add a dark-grey background on hover */
+}
 
-  .pagination {
-    text-align: center;
-  }
+#myBtn:before {
+  content: "\ea32";
+}
 
-  .footer {
-    margin-top: 1rem;
-    border-top: 0.25rem solid #b4ff00;
-    min-height: 8rem;
-    background: #f2f2f2;
-  }
+.pagination {
+  text-align: center;
+}
 
-  .ft-series .link-series {
-    background: #9e9e9e;
-  }
+.footer {
+  margin-top: 1rem;
+  border-top: 0.25rem solid #b4ff00;
+  min-height: 8rem;
+  background: #f2f2f2;
+}
 
-  /* Grid system */
+.ft-series .link-series {
+  background: #9e9e9e;
+}
+
+/* Grid system */
+.container {
+  padding-right: 12px;
+  padding-left: 12px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.grid-col-2 {
+  grid-template-columns: 1fr 1fr;
+}
+
+@media (min-width: 576px) {
   .container {
-    padding-right: 12px;
-    padding-left: 12px;
-    margin-right: auto;
-    margin-left: auto;
+    width: 540px;
   }
-
-  .grid-col-2 {
+  .grid-col-sm-2 {
     grid-template-columns: 1fr 1fr;
   }
+}
 
-  @media (min-width: 576px) {
-    .container {
-      width: 540px;
-    }
-    .grid-col-sm-2 {
-      grid-template-columns: 1fr 1fr;
-    }
+@media (min-width: 768px) {
+  .container {
+    width: 750px;
   }
+  .grid-col-md-2 {
+    grid-template-columns: 1fr 1fr;
+  }
+}
 
-  @media (min-width: 768px) {
-    .container {
-      width: 750px;
-    }
-    .grid-col-md-2 {
-      grid-template-columns: 1fr 1fr;
-    }
+@media (min-width: 992px) {
+  .container {
+    width: 970px;
   }
+}
 
-  @media (min-width: 992px) {
-    .container {
-      width: 970px;
-    }
+@media (min-width: 1200px) {
+  .container {
+    width: 1170px;
   }
+  .grid-col-xl-3 {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+  .grid-col-xl-4 {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+}
 
-  @media (min-width: 1200px) {
-    .container {
-      width: 1170px;
-    }
-    .grid-col-xl-3 {
-      grid-template-columns: 1fr 1fr 1fr;
-    }
-    .grid-col-xl-4 {
-      grid-template-columns: 1fr 1fr 1fr 1fr;
-    }
+@media (min-width: 1400px) {
+  .container {
+    width: 1320px;
   }
+  .grid-col-xxl-4 {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+}
 
-  @media (min-width: 1400px) {
-    .container {
-      width: 1320px;
-    }
-    .grid-col-xxl-4 {
-      grid-template-columns: 1fr 1fr 1fr 1fr;
-    }
+@media (max-width: 575px) {
+  .grid-col-xs-1 {
+    grid-template-columns: 1fr;
   }
-
-  @media (max-width: 575px) {
-    .grid-col-xs-1 {
-      grid-template-columns: 1fr;
-    }
-  }
+}

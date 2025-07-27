@@ -8,6 +8,8 @@ export default ({
   series,
   name,
   liked,
+  watched,
+  btnWatched,
 }) => {
   let template;
   const randomImage = Math.floor(Math.random() * 10 + Math.random() * 10);
@@ -30,9 +32,10 @@ export default ({
       : "";
 
   template += `
-      <article class="d-flex align-self-stretch col-xs-12 col-sm-12 col-md-6 col-xl-4 col-xxl-3 p-2 videos-item" data-date="${date}" data-series="${series}" data-title="${item}" data-status="${liked}">
+      <article class="d-flex align-self-stretch col-xs-12 col-sm-12 col-md-6 col-xl-4 col-xxl-3 p-2 videos-item" data-date="${date}" data-series="${series}" data-title="${item}" data-status="${liked}" data-watched="${watched}">
         <div class="overflow-hidden pb-2 px-1 box">
           ${btnLiked}
+          ${btnWatched}
           <div class="d-flex py-2">
             <p class="mb-0 col-4 date">${date}</p>
             <p class="mb-0 col-8 series text-truncate">
