@@ -278,17 +278,7 @@ window.addEventListener("DOMContentLoaded", () => {
   // Load initial state
   state.initialPages = Array.from(
     document.querySelectorAll(".videos-item")
-  ).sort((a, b) => {
-    const nameA = a.dataset.date.toUpperCase();
-    const nameB = b.dataset.date.toUpperCase();
-    if (nameA > nameB) {
-      return -1;
-    }
-    if (nameA < nameB) {
-      return 1;
-    }
-    return 0;
-  });
+  ).sort((a, b) => Number(b.dataset.date) - Number(a.dataset.date));
 
   // Filter watched videos
   // state.initialPages = Array.from(
@@ -303,7 +293,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
   const searchByServer = async (criteria = []) => {
     const result = await fetch(`${SERVER_URL}/search/${criteria}`);
-    const html = await result.text();
+    const html = (await result.text()).trim();
     document.querySelector(".main").innerHTML = html;
     lazyLoad();
     handleBtnLiked();
@@ -345,6 +335,17 @@ window.addEventListener("DOMContentLoaded", () => {
       document.querySelector(".pagination").remove();
     }
   };
+
+  // Search form
+  document.querySelector(".form-search").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const inputSearch = document
+      .querySelector(".input-search")
+      .value.trim()
+      .toUpperCase()
+      .split(" ");
+    searchByServer(inputSearch);
+  });
 
   // Category handler
   const categoryHandler = (btnClass, filterFn) => {

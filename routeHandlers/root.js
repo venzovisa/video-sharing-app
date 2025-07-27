@@ -87,7 +87,7 @@ const loadData = async () => {
         }"></span>`;
         // Local file
       } else {
-        date = dateParser(item);
+        date = item;
         //name = nameParser(item);
         series = seriesParser(item);
         btnPlayURL = `/${item}/${video[0]}`;
