@@ -1,3 +1,3 @@
 @ECHO OFF
 TITLE Video Sharing App
-Powershell npm start app.js
+Powershell pm2 stop app.js

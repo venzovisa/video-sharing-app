@@ -1,3 +1,11 @@
+const getDate = (date) => {
+  try {
+    return new Date(Number(date)).toISOString().split("T")[0]
+  } catch (err) {
+    return 'N/A'
+  }
+}
+
 export default ({
   images,
   linkImage,
@@ -38,7 +46,7 @@ export default ({
           ${btnWatched}
           <div class="d-flex py-2">
             <p class="mb-0 col-4 date">${
-              new Date(Number(date)).toISOString().split("T")[0]
+              getDate(date)
             }</p>
             <p class="mb-0 col-8 series text-truncate">
               <a href="/" data-series="${series}" title="${series}" class="d-inline-block px-1 bg-dark link-series text-white">${series}</a>

@@ -6,6 +6,19 @@ import getImageTemplate from "../templates/image.js";
 const __dirname = path.resolve();
 import { dateParser, isFolder, nameParser, seriesParser } from "../utils.js";
 
+const extractAndTransformDate = (str) => {
+  // Match a date pattern like 25.01.19 anywhere in the string
+  const match = str.match(/\b(\d{2})\.(\d{2})\.(\d{2})\b/);
+  
+  if (!match) {
+    return str;
+  }
+
+  const [_, yy, mm, dd] = match;
+  const fullYear = `20${yy}`;
+  return new Date(`${fullYear}-${mm}-${dd}`).getTime();
+}
+
 const loadData = async () => {
   const files = await readdir(`${__dirname}/videos`);
   if (files.length === 0) {
@@ -83,7 +96,7 @@ const loadData = async () => {
         }"></span>`;
         // Local file
       } else {
-        date = item;
+        date = extractAndTransformDate(item);
         //name = nameParser(item);
         series = seriesParser(item);
         btnPlayURL = `/${item}/${video[0]}`;
