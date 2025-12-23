@@ -43,6 +43,7 @@ const loadData = async () => {
       if (images.length === 0) continue;
 
       let date;
+      let createdAt;
       let name;
       let series;
       let btnPlayURL;
@@ -58,7 +59,11 @@ const loadData = async () => {
         const fileData = JSON.parse(
           await readFile(`${__dirname}/videos/${item}/nfo.json`)
         );
+        // Skip invalid remote urls
+        if (fileData.url === 'https://mega.nz/embed/link!1m') continue;
+        url = fileData.url;
         date = fileData.date;
+        createdAt = fileData.createdAt;
         name = fileData.name;
         series = fileData.series;
         btnPlayURL = `${fileData.url}`;
@@ -74,7 +79,6 @@ const loadData = async () => {
         btnWatched = `<span title="Add to watched" class="btn-watched${
           watched ? " active" : ""
         }"></span>`;
-        url = fileData.url;
         // Local file and nfo.json
       } else if (json.length > 0 && video.length > 0) {
         const fileData = JSON.parse(
@@ -83,6 +87,7 @@ const loadData = async () => {
         // Skip watched
         if (fileData.watched) continue;
         date = fileData.date;
+        createdAt = fileData.createdAt;
         name = fileData.name;
         series = fileData.series;
         btnPlayURL = `/${item}/${video[0]}`;
@@ -109,6 +114,7 @@ const loadData = async () => {
           title: "",
           liked: false,
           watched: false,
+          createdAt: (new Date).getTime(),
         };
         await writeFile(
           `${__dirname}/videos/${item}/nfo.json`,
@@ -121,6 +127,7 @@ const loadData = async () => {
         btnLiked,
         btnPlayURL,
         date,
+        createdAt,
         item,
         images,
         linkImage,

@@ -13,6 +13,7 @@ export default ({
   btnLiked,
   item,
   date,
+  createdAt,
   series,
   name,
   liked,
@@ -40,7 +41,7 @@ export default ({
       : "";
 
   template += `
-      <article class="d-flex align-self-stretch col-xs-12 col-sm-12 col-md-6 col-xl-4 col-xxl-3 p-2 videos-item" data-date="${date}" data-series="${series}" data-title="${item}" data-status="${liked}" data-watched="${watched}">
+      <article class="d-flex align-self-stretch col-xs-12 col-sm-12 col-md-6 col-xl-4 col-xxl-3 p-2 videos-item" data-createdAt="${createdAt}" data-date="${date}" data-series="${series}" data-title="${item}" data-status="${liked}" data-watched="${watched}">
         <div class="overflow-hidden pb-2 px-1 box">
           ${btnLiked}
           ${btnWatched}

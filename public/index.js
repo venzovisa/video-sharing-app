@@ -278,7 +278,7 @@ window.addEventListener("DOMContentLoaded", () => {
   // Load initial state
   state.initialPages = Array.from(
     document.querySelectorAll(".videos-item")
-  ).sort((a, b) => Number(b.dataset.date) - Number(a.dataset.date));
+  ).sort((a, b) => Number(b.dataset.createdat) - Number(a.dataset.createdat));
 
   // Filter watched videos
   // state.initialPages = Array.from(
