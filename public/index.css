@@ -68,7 +68,7 @@ iframe {
   position: relative;
   margin-bottom: 1rem;
   border-top: 0.125rem solid #b4ff00;
-  border-radius: 0.25rem;
+  border-radius: 0.75rem;
   -webkit-box-shadow: 0 1px 1px rgb(0 0 0 / 3%), 0 1px 2px rgb(0 0 0 / 3%),
     0 0 2px rgb(0 0 0 / 3%), 0 3px 4px rgb(0 0 0 / 3%);
   box-shadow: 0 1px 1px rgb(0 0 0 / 3%), 0 1px 2px rgb(0 0 0 / 3%),
@@ -149,6 +149,7 @@ iframe {
 .link-series {
   text-decoration: none;
   font-size: 1.125rem;
+  border-radius: 0.25rem;
 }
 
 .videos-item .name {
@@ -194,55 +195,12 @@ iframe {
 
 /* #endregion Videos*/
 
-/* #region Pagination */
-.btn-pagination {
-  margin: 0.25rem;
-  min-width: 2.5rem;
-  min-height: 1.5rem;
-  padding: 0.25rem;
+/* #region Infinite scroll */
+.scroll-message {
+  margin: 0.5rem 0 1.5rem;
+  opacity: 0.6;
 }
-
-.btn-pagination.active {
-  color: #002340;
-  background: #b4ff00;
-}
-
-.btn-wrapper .btn-prev-box {
-  flex-grow: 1;
-  text-align: left;
-}
-
-.btn-wrapper .btn-prev:before {
-  content: "\ea38";
-  margin-right: 0.5rem;
-  color: #002340;
-  font-family: "icomoon";
-  font-weight: 400;
-  font-size: 1rem;
-}
-
-.btn-wrapper .btn-prev:hover:before {
-  color: #ffffff;
-}
-
-.btn-wrapper .btn-next-box {
-  flex-grow: 1;
-  text-align: right;
-}
-
-.btn-wrapper .btn-next:after {
-  content: "\ea34";
-  margin-left: 0.5rem;
-  color: #002340;
-  font-family: "icomoon";
-  font-weight: 400;
-  font-size: 1rem;
-}
-
-.btn-wrapper .btn-next:hover:after {
-  color: #ffffff;
-}
-/* #endregion Pagination */
+/* #endregion Infinite scroll */
 
 /* Scroll to top button */
 #myBtn {
@@ -271,7 +229,7 @@ iframe {
   content: "\ea32";
 }
 
-.pagination {
+.scroll-status {
   text-align: center;
 }
 

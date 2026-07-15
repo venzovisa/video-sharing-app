@@ -35,3 +35,14 @@ export const isFolder = (item) =>
   !item.endsWith(".css") &&
   !item.endsWith(".js") &&
   !item.includes("@");
+
+// Requests made by the client's own fetch() calls set this header so the
+// server can return just the swappable fragment instead of a full page.
+export const isFragmentRequest = (req) =>
+  req.get("X-Requested-With") === "fetch";
+
+export const sendPage = (req, res, contentHtml, renderDefault) => {
+  res.set({ "Content-Type": "text/html" });
+  res.send(isFragmentRequest(req) ? contentHtml : renderDefault(contentHtml));
+  res.end();
+};

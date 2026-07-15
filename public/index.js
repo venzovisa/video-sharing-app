@@ -1,11 +1,7 @@
-const SERVER_URL = "http://192.168.0.100";
-
 const state = {
-  initialPages: [],
   pages: [],
-  foundPages: [],
   itemsPerPage: 12,
-  currentPage: 1,
+  revealed: 0,
 };
 
 const footerPusher = () => {
@@ -14,60 +10,6 @@ const footerPusher = () => {
   document.querySelector(".main").style.minHeight = String(
     window.innerHeight - (header + footer)
   ).concat("px");
-};
-
-const renderPagination = ({ pages, itemsPerPage, currentPage }) => {
-  let buttons = "";
-  //const length = Math.ceil(pages.length / itemsPerPage);
-  //const offset = currentPage + 4;
-  //let end = offset > length ? length : offset;
-  // for (let item = 1; item <= length; item++) {
-  //   buttons += `<button class="btn-pagination" value="${item}">${item}</button>`;
-  // }
-
-  buttons = `
-  <button class="btn-pagination" value="${currentPage}">${currentPage}</button>
-  ${
-    pages.length > 12
-      ? `<button class="btn-pagination" value="${currentPage + 1}">${
-          currentPage + 1
-        }</button><button class="btn-pagination" value="${currentPage + 2}">${
-          currentPage + 2
-        }</button>`
-      : ""
-  }
-  `;
-
-  // Previous pages
-  // const previousPages = currentPage - 2;
-  // for (let item = previousPages > 0 ? previousPages : 1; item < currentPage + 1; item++) {
-  //   buttons += `<button class="btn-pagination" value="${item}">${item}</button>`;
-  // }
-
-  // Current page
-  //buttons += `<button class="btn-pagination" value="${currentPage+1}">${currentPage+1}</button>`;
-
-  // Next pages
-  // const nextPages = currentPage + 1;
-  // for (let item = nextPages; item < length; item++) {
-  //   buttons += `<button class="btn-pagination" value="${item}">${item}</button>`;
-  // }
-
-  // if (offset > length) {
-  //   for (let item = 1; item <= length; item++) {
-  //     buttons += `<button class="btn-pagination" value="${item}">${item}</button>`;
-  //   }
-  // } else {
-  //   for (
-  //     let item = length - currentPage < 4 ? length - 4 : currentPage;
-  //     item <= end;
-  //     item++
-  //   ) {
-  //     buttons += `<button class="btn-pagination" value="${item}">${item}</button>`;
-  //   }
-  // }
-
-  return buttons;
 };
 
 const lazyLoad = () => {
@@ -86,161 +28,6 @@ const lazyLoad = () => {
   }
 };
 
-const switchPages = (domClass, pages, itemsPerPage, currentPage) => {
-  document.querySelector(domClass).innerHTML = "";
-
-  if (currentPage === 1) {
-    const end = pages.length < itemsPerPage ? pages.length : itemsPerPage;
-    for (let i = 0; i < end; i++) {
-      document.querySelector(domClass).appendChild(pages[i]);
-    }
-  } else {
-    const start = currentPage * itemsPerPage - itemsPerPage;
-    let end = currentPage * itemsPerPage;
-    if (end > pages.length) end = pages.length;
-    for (let i = start; i < end; i++) {
-      document.querySelector(domClass).appendChild(pages[i]);
-    }
-  }
-
-  lazyLoad();
-};
-
-const pageCounter = () => {
-  if (state.currentPage === 1) {
-    document.querySelector(
-      ".page-counter"
-    ).innerHTML = `${state.currentPage} - ${state.itemsPerPage}`;
-  } else if (state.currentPage * state.itemsPerPage > state.pages.length) {
-    document.querySelector(".page-counter").innerHTML = `${
-      state.currentPage * state.itemsPerPage - state.itemsPerPage
-    } - ${state.pages.length}`;
-  } else {
-    document.querySelector(".page-counter").innerHTML = `${
-      (state.currentPage - 1) * state.itemsPerPage + 1
-    } - ${
-      (state.currentPage - 1) * state.itemsPerPage + state.itemsPerPage + 1
-    }`;
-  }
-};
-
-// Handle current page active class
-const paginationHandler = () => {
-  const query = document.querySelectorAll(".btn-pagination");
-
-  for (const item of query) {
-    item.addEventListener("click", (e) => {
-      for (const item of query) {
-        item.classList.remove("active");
-      }
-
-      state.currentPage = Number(e.target.value);
-      updateActivePage();
-
-      switchPages(
-        ".videos-list",
-        state.pages,
-        state.itemsPerPage,
-        state.currentPage
-      );
-    });
-  }
-  pageCounter();
-};
-
-// 12, 24, 48
-const switchItemsPerPage = () => {
-  const buttons = document.querySelectorAll(".btn-items");
-
-  for (const btn of buttons) {
-    btn.addEventListener("click", (e) => {
-      state.itemsPerPage = Number(e.target.value);
-      switchPages(
-        ".videos-list",
-        state.pages,
-        state.itemsPerPage,
-        state.currentPage
-      );
-      document.querySelector(".pagination-container").innerHTML =
-        renderPagination(state);
-      paginationHandler();
-    });
-  }
-};
-
-// Used in btnPrev and btnNext handlers
-const updateActivePage = () => {
-  const query = document.querySelectorAll(".btn-pagination");
-
-  for (const item of query) {
-    item.classList.remove("active");
-  }
-
-  if (state.currentPage === 1) {
-    query[0].value = state.currentPage;
-    query[0].textContent = state.currentPage;
-    query[0].classList.add("active");
-
-    query[1].value = state.currentPage + 1;
-    query[1].textContent = state.currentPage + 1;
-
-    query[2].value = state.currentPage + 2;
-    query[2].textContent = state.currentPage + 2;
-  } else if (state.currentPage > state.pages.length / state.itemsPerPage) {
-    query[0].value = state.currentPage - 2;
-    query[0].textContent = state.currentPage - 2;
-
-    query[1].value = state.currentPage - 1;
-    query[1].textContent = state.currentPage - 1;
-
-    query[2].value = state.currentPage;
-    query[2].textContent = state.currentPage;
-    query[2].classList.add("active");
-  } else {
-    query[0].value = state.currentPage - 1;
-    query[0].textContent = state.currentPage - 1;
-
-    query[1].value = state.currentPage;
-    query[1].textContent = state.currentPage;
-    query[1].classList.add("active");
-
-    query[2].value = state.currentPage + 1;
-    query[2].textContent = state.currentPage + 1;
-  }
-
-  //query[1].classList.add("active");
-  // if (state.currentPage < 1 || state.currentPage > query.length) {
-  //   query[0].classList.add("active");
-  // } else {
-  //   query[state.currentPage - 1].classList.add("active");
-  // }
-};
-
-const renderFooterSeries = () => {
-  const ftSeriesContainer = document.querySelector(".ft-series");
-  state.initialPages.reduce((state, next) => {
-    if (!state.includes(next.dataset.series)) {
-      const link = document.createElement("a");
-      link.href = "/";
-      link.title = `${next.dataset.series}`;
-      link.dataset.series = `${next.dataset.series}`;
-      link.classList.add(
-        "d-inline-block",
-        "m-1",
-        "px-1",
-        "link-series",
-        "text-white"
-      );
-      link.textContent = `${next.dataset.series}`;
-
-      ftSeriesContainer.appendChild(link);
-      return [...state, next.dataset.series];
-    }
-
-    return state;
-  }, []);
-};
-
 const toggleRouteHandler = (btnClass, activeURL, inactiveURL) => {
   const btnDOM = document.querySelectorAll(btnClass);
   for (const btn of btnDOM) {
@@ -251,12 +38,12 @@ const toggleRouteHandler = (btnClass, activeURL, inactiveURL) => {
         if (btn.classList.contains("active")) {
           btn.classList.remove("active");
           (async () => {
-            await fetch(`${SERVER_URL}/${video}/${activeURL}`);
+            await fetch(`/${video}/${activeURL}`);
           })();
         } else {
           btn.classList.add("active");
           (async () => {
-            await fetch(`${SERVER_URL}/${video}/${inactiveURL}`);
+            await fetch(`/${video}/${inactiveURL}`);
           })();
         }
       } catch (err) {
@@ -274,190 +61,142 @@ const handleBtnWatched = () => {
   toggleRouteHandler(".btn-watched", "watch/unwatched", "watch/watched");
 };
 
-window.addEventListener("DOMContentLoaded", () => {
-  // Load initial state
-  state.initialPages = Array.from(
-    document.querySelectorAll(".videos-item")
-  ).sort((a, b) => Number(b.dataset.createdat) - Number(a.dataset.createdat));
+const updateScrollStatus = () => {
+  const counter = document.querySelector(".page-counter");
+  if (!counter) return;
 
-  // Filter watched videos
-  // state.initialPages = Array.from(
-  //   document.querySelectorAll(".videos-item")
-  // ).filter((i) => i.dataset.watched !== "true");
+  counter.innerHTML = `Showing ${state.revealed} of ${state.pages.length}`;
 
-  renderFooterSeries();
+  const message = document.querySelector(".scroll-message");
+  if (message) {
+    message.textContent =
+      state.revealed < state.pages.length ? "Loading more…" : "That's everything";
+  }
+};
+
+const revealNextBatch = () => {
+  const container = document.querySelector(".videos-list");
+  if (!container) return;
+
+  const end = Math.min(state.revealed + state.itemsPerPage, state.pages.length);
+  for (let i = state.revealed; i < end; i++) {
+    container.appendChild(state.pages[i]);
+  }
+  state.revealed = end;
+
+  lazyLoad();
+  updateScrollStatus();
+};
+
+let scrollObserver = null;
+
+// Entries already arrive sorted and fully loaded from the server; this just
+// controls how many of them are attached to the DOM at once, revealing more
+// as the sentinel element scrolls into view.
+const wireInfiniteScroll = () => {
+  const sentinel = document.querySelector(".scroll-sentinel");
+  if (!sentinel) return;
+
+  const container = document.querySelector(".videos-list");
+  if (!container) return;
+
+  state.pages = Array.from(document.querySelectorAll(".videos-item"));
+  state.revealed = 0;
+  container.innerHTML = "";
+
+  if (scrollObserver) {
+    scrollObserver.disconnect();
+  }
+
+  revealNextBatch();
+
+  scrollObserver = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting && state.revealed < state.pages.length) {
+      revealNextBatch();
+    }
+  });
+  scrollObserver.observe(sentinel);
+};
+
+const updateBrowseCounter = () => {
+  const counter = document.querySelector(".browse-counter");
+  if (!counter) return;
+  counter.innerHTML = `<strong>Browse ${
+    document.querySelectorAll(".videos-item").length
+  } files</strong>`;
+};
+
+// Rebinds the per-card series/name links after a content swap replaces them.
+const bindLinks = (scope) => {
+  const links = scope.querySelectorAll(".link-name, .link-series");
+  for (const link of links) {
+    link.addEventListener("click", (e) => {
+      e.preventDefault();
+      navigateTo(link.getAttribute("href"));
+    });
+  }
+};
+
+// Fetches a route as a fragment, swaps it into .content, and syncs the URL
+// bar via the History API so the view is bookmarkable/shareable/back-able.
+// Falls back to a real navigation on pages without a .content region (e.g.
+// a single-folder gallery page), since there's nothing to swap into there.
+const navigateTo = async (url, { push = true } = {}) => {
+  const content = document.querySelector(".content");
+  if (!content) {
+    window.location.href = url;
+    return;
+  }
+
+  const result = await fetch(url, { headers: { "X-Requested-With": "fetch" } });
+  const html = (await result.text()).trim();
+  content.innerHTML = html;
+
+  if (push) {
+    window.history.pushState({}, "", url);
+  }
+
+  updateBrowseCounter();
+  lazyLoad();
   handleBtnLiked();
   handleBtnWatched();
+  bindLinks(content);
+  wireInfiniteScroll();
+};
 
-  state.pages = [...state.initialPages];
+const bindCategoryLinks = () => {
+  const links = document.querySelectorAll(
+    ".link-liked, .link-watched, .link-new"
+  );
+  for (const link of links) {
+    link.addEventListener("click", (e) => {
+      e.preventDefault();
+      navigateTo(link.getAttribute("href"));
+    });
+  }
+};
 
-  const searchByServer = async (criteria = []) => {
-    const result = await fetch(`${SERVER_URL}/search/${criteria}`);
-    const html = (await result.text()).trim();
-    document.querySelector(".main").innerHTML = html;
-    lazyLoad();
-    handleBtnLiked();
-    handleBtnWatched();
-    // state.pages = [...state.initialPages];
-    // state.pages = state.pages.filter(entry => criteria.some(input => entry.dataset.title.toUpperCase().includes(input)));
-    // state.currentPage = 1;
-    // document.querySelector('.pagination-container').innerHTML = renderPagination(state);
-    // document.querySelector('.btn-pagination').classList.add('active');
-    // document.querySelector('.browse-counter').innerHTML = `<strong>Browse ${state.pages.length} files</strong>`;
-    // switchPages('.videos-list', state.pages, state.itemsPerPage, state.currentPage);
-    // paginationHandler();
-  };
+window.addEventListener("popstate", () => {
+  navigateTo(window.location.pathname, { push: false });
+});
 
-  const searchBy = async (criteria = []) => {
-    state.pages = [...state.initialPages];
-    state.pages = state.pages.filter((entry) =>
-      criteria.some((input) =>
-        entry.dataset.title.toUpperCase().includes(input)
-      )
-    );
-    state.currentPage = 1;
-    document.querySelector(".pagination-container").innerHTML =
-      renderPagination(state);
-    document.querySelector(".btn-pagination").classList.add("active");
-    document.querySelector(
-      ".browse-counter"
-    ).innerHTML = `<strong>Browse ${state.pages.length} files</strong>`;
-    switchPages(
-      ".videos-list",
-      state.pages,
-      state.itemsPerPage,
-      state.currentPage
-    );
-
-    if (state.pages.length > state.itemsPerPage) {
-      paginationHandler();
-    } else {
-      document.querySelector(".pagination").remove();
-    }
-  };
+window.addEventListener("DOMContentLoaded", () => {
+  handleBtnLiked();
+  handleBtnWatched();
+  bindLinks(document);
+  bindCategoryLinks();
 
   // Search form
   document.querySelector(".form-search").addEventListener("submit", (e) => {
     e.preventDefault();
-    const inputSearch = document
-      .querySelector(".input-search")
-      .value.trim()
-      .toUpperCase()
-      .split(" ");
-    searchByServer(inputSearch);
+    const query = document.querySelector(".input-search").value.trim();
+    if (query) {
+      navigateTo(`/search/${encodeURIComponent(query)}`);
+    }
   });
 
-  // Category handler
-  const categoryHandler = (btnClass, filterFn) => {
-    document.querySelector(btnClass).addEventListener("click", (e) => {
-      e.preventDefault();
-      state.pages = [...state.initialPages];
-      state.pages = state.pages.filter(filterFn);
-      state.currentPage = 1;
-      document.querySelector(".pagination-container").innerHTML =
-        renderPagination(state);
-      document.querySelector(".btn-pagination").classList.add("active");
-      document.querySelector(
-        ".browse-counter"
-      ).innerHTML = `<strong>Browse ${state.pages.length} files</strong>`;
-      switchPages(
-        ".videos-list",
-        state.pages,
-        state.itemsPerPage,
-        state.currentPage
-      );
-      if (state.pages.length > state.itemsPerPage) {
-        paginationHandler();
-      } else {
-        document.querySelector(".pagination").remove();
-      }
-    });
-  };
-
-  categoryHandler(".link-liked", (entry) => entry.dataset.status === "true");
-  categoryHandler(".link-watched", (entry) => entry.dataset.watched === "true");
-  categoryHandler(".link-new", (entry) => entry.dataset.watched === "false");
-
-  // Search by property
-  const linkNames = document.querySelectorAll(".link-name");
-  for (const link of linkNames) {
-    link.addEventListener("click", (e) => {
-      e.preventDefault();
-      searchBy(link.dataset.name.trim().toUpperCase().split(" "));
-    });
-  }
-
-  const linkSeries = document.querySelectorAll(".link-series");
-  for (const link of linkSeries) {
-    link.addEventListener("click", (e) => {
-      e.preventDefault();
-      searchBy(link.dataset.series.trim().toUpperCase().split(" "));
-    });
-  }
-
-  if (document.location.pathname === "/") {
-    document.querySelector(
-      ".browse-counter"
-    ).innerHTML = `<strong>Browse ${state.pages.length} files</strong>`;
-    document.querySelector(".pagination-container").innerHTML =
-      renderPagination(state);
-    document.querySelector(".btn-pagination").classList.add("active");
-    const btnPrev = document.querySelector(".btn-prev");
-    const btnNext = document.querySelector(".btn-next");
-
-    btnPrev.addEventListener("click", (e) => {
-      state.currentPage--;
-
-      if (state.currentPage < 1) {
-        state.currentPage = 1;
-      }
-
-      switchPages(
-        ".videos-list",
-        state.pages,
-        state.itemsPerPage,
-        state.currentPage
-      );
-      document.querySelector(".pagination-container").innerHTML =
-        renderPagination(state);
-      paginationHandler();
-      updateActivePage();
-      pageCounter();
-    });
-
-    btnNext.addEventListener("click", (e) => {
-      const end = Math.ceil(state.pages.length / state.itemsPerPage);
-      if (state.currentPage < end) {
-        state.currentPage++;
-      }
-
-      if (state.currentPage > end) {
-        state.currentPage = end;
-      }
-
-      switchPages(
-        ".videos-list",
-        state.pages,
-        state.itemsPerPage,
-        state.currentPage
-      );
-      document.querySelector(".pagination-container").innerHTML =
-        renderPagination(state);
-      paginationHandler();
-      updateActivePage();
-      pageCounter();
-    });
-
-    paginationHandler();
-    switchPages(
-      ".videos-list",
-      state.pages,
-      state.itemsPerPage,
-      state.currentPage
-    );
-    switchItemsPerPage();
-    pageCounter();
-  }
+  updateBrowseCounter();
+  wireInfiniteScroll();
 
   footerPusher();
 
@@ -486,8 +225,6 @@ window.addEventListener("DOMContentLoaded", () => {
 let mybutton = document.getElementById("myBtn");
 
 // When the user scrolls down 20px from the top of the document, show the button
-//window.onscroll = function() {scrollFunction()};
-
 function scrollFunction() {
   if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
     mybutton.style.display = "block";

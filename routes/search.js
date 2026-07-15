@@ -1,7 +1,8 @@
 import { readdir, readFile } from "fs/promises";
 import path from "path";
 const __dirname = path.resolve();
-import { dateParser, nameParser, seriesParser } from "../utils.js";
+import renderDefault from "../templates/default.js";
+import { dateParser, nameParser, sendPage, seriesParser } from "../utils.js";
 import getImageTemplate from "../templates/image.js";
 
 export const searchHandler = async (req, res) => {
@@ -13,8 +14,7 @@ export const searchHandler = async (req, res) => {
   );
 
   if (files.length === 0) {
-    res.send("<strong>No content found</strong>");
-    res.end();
+    sendPage(req, res, "<strong>No content found</strong>", renderDefault);
     return;
   }
 
@@ -112,6 +112,5 @@ export const searchHandler = async (req, res) => {
     } // File type check
   }
   response += `</section>`;
-  res.send(response);
-  res.end();
+  sendPage(req, res, response, renderDefault);
 };

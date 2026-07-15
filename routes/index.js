@@ -1,3 +1,4 @@
+export * from "./category.js";
 export * from "./gallery.js";
 export * from "./like.js";
 export * from "./play.js";

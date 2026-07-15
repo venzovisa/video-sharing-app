@@ -50,13 +50,13 @@ export default ({
               getDate(date)
             }</p>
             <p class="mb-0 col-8 series text-truncate">
-              <a href="/" data-series="${series}" title="${series}" class="d-inline-block px-1 bg-dark link-series text-white">${series}</a>
+              <a href="/search/${encodeURIComponent(series)}" title="${series}" class="d-inline-block px-1 bg-dark link-series text-white">${series}</a>
             </p>
           </div>  
           ${imagesTemplate}
           <p class="overflow-hidden text-truncate">${item}</p>
           <p class="name">
-            <a href="/" data-name="${name}" title="${name}" class="link-name">${name}</a>
+            <a href="/search/${encodeURIComponent(name)}" title="${name}" class="link-name">${name}</a>
           </p>
           <a href="/${item}" title="${item}" target="_blank" class="btn btn-gallery">Gallery</a>
           ${btnPlayTemplate}

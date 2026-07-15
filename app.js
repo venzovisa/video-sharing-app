@@ -9,6 +9,7 @@ import { likeHandler } from "./routes/index.js";
 import { watchHandler } from "./routes/index.js";
 import { galleryHandler } from "./routes/index.js";
 import { playHandler } from "./routes/index.js";
+import { categoryHandler } from "./routes/index.js";
 
 app.use(cors());
 app.use(express.static("public"));
@@ -40,6 +41,13 @@ try {
   app.get("/:folder/watch/:watched", watchHandler);
 } catch (err) {
   console.log("Error in GET /:folder/:watch", err);
+}
+
+// Category routes: New / Liked / Watched
+try {
+  app.get("/:category(new|liked|watched)", categoryHandler);
+} catch (err) {
+  console.error(`Error in GET /:category`, err);
 }
 
 // Gallery

@@ -34,7 +34,16 @@ const generateGalleryTemplate = ({
 
 export const galleryHandler = async (req, res) => {
   console.log(`${req.method} ${req.url}`);
-  const files = await readdir(`${__dirname}/videos/${req.params.folder}`);
+
+  let files;
+  try {
+    files = await readdir(`${__dirname}/videos/${req.params.folder}`);
+  } catch (err) {
+    res.sendStatus(404);
+    res.end();
+    return;
+  }
+
   const video = files.filter((item) => item.endsWith(".mp4"));
   const images = files.filter(
     (item) => item.endsWith(".jpg") || item.endsWith(".png")

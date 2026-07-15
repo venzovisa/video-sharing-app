@@ -37,12 +37,9 @@ export default (main) => {
             </g>
           </g>
           </svg>
-          <button class="btn-items" value="12">12</button>
-          <button class="btn-items" value="24">24</button>
-          <button class="btn-items" value="48">48</button>
         </div>
       </section>
-        ${main}
+        <div class="content">${main}</div>
     </main>
     ${footer}
     <script src="../bootstrap.bundle.min.js" defer ></script>
